@@ -10,7 +10,7 @@ export const ProductContextProvider=({children})=>{
     const [products, setProducts] = useState([]);
     const [isloading, setIsloading] = useState(true);
     const[noOfCartItems,setNoOfCartItems]=useState(0);
-    const[incart,setIncart]=useState([]);
+    const[incart,setIncart]=useState(false);
 
     useEffect(() => {
     const FetchProduct = async () => {
