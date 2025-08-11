@@ -9,6 +9,7 @@ import InCart from '@/Components/Cartcomponents/InCart';
 
 const Cart = () => {
   const [incartProducts, setIncartproducts] = useState([]);
+  const [loading,setLoading]=useState(true)
   
   const [getsubtotal,setGetsubtotal]=useState(0)
   useEffect(() => {
@@ -20,13 +21,26 @@ const Cart = () => {
         setIncartproducts(Response.data.items);
         setGetsubtotal(Response.data.sum_total);
         console.log(Response.data.sum_total)
+        setLoading(false)
       } catch (err) {
         console.log(err.message);
         console.log(cart_code);
-      }
+        setLoading(false)
+      }finally {
+      setTimeout(() => setLoading(false), 300); // delay to avoid flicker
+    }
     };
     FetchProducts();
   }, []);
+
+ if (loading) {
+  return (
+    <div className="flex justify-center items-center h-screen">
+      <span className="loading loading-spinner loading-lg"></span>
+    </div>
+  );
+}
+
 
 
   const subtotal = getsubtotal.toFixed(2)

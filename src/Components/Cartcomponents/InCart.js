@@ -47,8 +47,8 @@ const InCart = ({ incartProducts, setGetsubtotal, item, setIncartproducts }) => 
         try {
             const Response = await Api.post('Delete_item/', { 'item_id': itemId })
             console.log(Response.data)
-             const updatedCart = incartProducts.map((itemed) =>
-                itemed.id ==! productId ? Response.data.data : itemed
+             const updatedCart = incartProducts.filter((itemed) =>
+                itemed.id !== itemId
             );
 
             setIncartproducts(updatedCart); // Keep cart state in sync
@@ -70,6 +70,7 @@ const InCart = ({ incartProducts, setGetsubtotal, item, setIncartproducts }) => 
             console.log(err.message)
         }
     }
+
        
     return (
         <div
