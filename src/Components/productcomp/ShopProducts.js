@@ -5,6 +5,7 @@ import Link from 'next/link'
 import Api from '@/Api/Api'
 import { useContext } from 'react'
 import { ProductContext } from '../context/ProductContext'
+
   
 const ShopProducts = ({product}) => {
     const product_id=product.id
@@ -46,11 +47,13 @@ const ShopProducts = ({product}) => {
               </p>
               <p className="mt-2 font-bold text-purple-700 text-md text-center">${product.price}</p>
               </Link>
+              <Link href={`/Shop/${product.slug}`}>
               <button
-                disabled={incart}
-               onClick={()=>AddtoCart(product.id)} className={!incart?'mt-4 bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-full transition duration-300 shadow-md':'mt-4 disabled: bg-purple-200 text-white px-6 py-2 rounded-full transition duration-300 shadow-md'}>
-                 Add to Cart
+              
+               className='mt-4 bg-purple-600 hover:bg-purple-500 text-white px-6 py-2 rounded-full transition duration-300 shadow-md'>
+                 View Product
               </button>
+              </Link>
             </div>
   )
 }

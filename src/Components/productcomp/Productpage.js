@@ -2,6 +2,7 @@
 import React, { useEffect } from 'react';
 import Api, { BaseUrl } from '@/Api/Api';
 
+
 const Productpage = ({ product,AddtoCart,incart,setIncart }) => {
    
     

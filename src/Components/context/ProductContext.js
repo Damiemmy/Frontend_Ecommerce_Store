@@ -3,6 +3,8 @@ import { createContext, use } from "react";
 import { useEffect,useState } from "react";
 import Api from '../../Api/Api';
 import { Randomvalue } from "../GenerateCode";
+import { ToastContainer, toast } from 'react-toastify';
+
 
 export const ProductContext=createContext()
 
@@ -11,7 +13,7 @@ export const ProductContextProvider=({children})=>{
     const [isloading, setIsloading] = useState(true);
     const[noOfCartItems,setNoOfCartItems]=useState(0);
     const[incart,setIncart]=useState(false);
-
+    
     useEffect(() => {
     const FetchProduct = async () => {
       try {
@@ -44,6 +46,7 @@ useEffect(()=>{
           console.log(Response.data)
           setIncart(true)
           setNoOfCartItems((curr)=>curr+1)
+          toast.success('Added to Cart Successfully')
           }catch(err){
           console.log(err.message)
           }

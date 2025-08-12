@@ -6,6 +6,8 @@ import Api from '@/Api/Api';
 import { useEffect,useState } from 'react';
 import { useContext } from 'react';
 import { ProductContext } from './context/ProductContext';
+import { ToastContainer, toast } from 'react-toastify';
+
 
 const Fixedlayout = ({ children }) => {
   const{noOfCartItems,setNoOfCartItems}=useContext(ProductContext)
@@ -33,6 +35,7 @@ const Fixedlayout = ({ children }) => {
     <div className="flex flex-col min-h-screen bg-white">
       {/* Header */}
       <Header noOfCartItems={noOfCartItems}/>
+      <ToastContainer />
 
       {/* Page Content */}
       <main className="flex-grow w-full">

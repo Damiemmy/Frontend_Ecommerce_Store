@@ -3,6 +3,7 @@ import { BaseUrl } from '@/Api/Api'
 import Api from '@/Api/Api'
 import { useContext } from 'react';
 import { ProductContext } from '../context/ProductContext';
+import { ToastContainer, toast } from 'react-toastify';
 
 const InCart = ({ incartProducts, setGetsubtotal, item, setIncartproducts }) => {
     const [quantities, setQuantities] = useState(item.quantity)
@@ -37,6 +38,7 @@ const InCart = ({ incartProducts, setGetsubtotal, item, setIncartproducts }) => 
             const UpdatedTotal=updatedCart.reduce(
                 (acc,curr)=> acc + curr.total,0)
             setGetsubtotal(UpdatedTotal)
+            toast.success('item quantity updated successfully')
 
         } catch (err) {
             console.log(err.message);
@@ -66,6 +68,7 @@ const InCart = ({ incartProducts, setGetsubtotal, item, setIncartproducts }) => 
             const UpdatedTotal=updatedCart.reduce(
                 (acc,curr)=> acc + curr.total,0)
             setGetsubtotal(UpdatedTotal)
+            toast.success('item removed from Cart successfully')
         } catch (err) {
             console.log(err.message)
         }
