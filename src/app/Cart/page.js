@@ -6,16 +6,18 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { BaseUrl } from '@/Api/Api';
 import InCart from '@/Components/Cartcomponents/InCart';
+import Spinner from '@/Components/spinner';
 
 const Cart = () => {
   const [incartProducts, setIncartproducts] = useState([]);
-  const [loading,setLoading]=useState(true)
+  const [loading,setLoading]=useState(false)
   
   const [getsubtotal,setGetsubtotal]=useState(0)
   useEffect(() => {
     const FetchProducts = async () => {
       const cart_code = localStorage.getItem('cart_code');
       try {
+        setLoading(true)
         const Response = await Api.get(`Fetch_in_cart/?cart_code=${cart_code}`);
         console.log(Response.data);
         setIncartproducts(Response.data.items);
@@ -24,7 +26,6 @@ const Cart = () => {
         setLoading(false)
       } catch (err) {
         console.log(err.message);
-        console.log(cart_code);
         setLoading(false)
       }finally {
       setTimeout(() => setLoading(false), 300); // delay to avoid flicker
@@ -34,12 +35,11 @@ const Cart = () => {
   }, []);
 
  if (loading) {
-  return (
-    <div className="flex justify-center items-center h-screen">
-      <span className="loading loading-spinner loading-lg"></span>
-    </div>
-  );
+  return (<Spinner loading={loading}/>)
 }
+  if(incartProducts.length === 0){
+    return <div className="text-center text-gray-600 text-xl flex justify-center items-center h-screen">You haven't added any item to your Cart   🛒.</div>
+  }
 
 
 
@@ -53,10 +53,6 @@ const Cart = () => {
       <h2 className="text-3xl font-bold text-gray-800 mb-10 text-center">
         🛒 Your Shopping Cart
       </h2>
-
-      {incartProducts.length === 0 ? (
-        <div className="text-center text-gray-600 text-xl">Your cart is empty.</div>
-      ) : (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
           {/* Cart Items */}
           <div className="md:col-span-2 flex flex-col gap-6">
@@ -94,7 +90,6 @@ const Cart = () => {
             </Link>
           </div>
         </div>
-      )}
     </div>
   );
 };

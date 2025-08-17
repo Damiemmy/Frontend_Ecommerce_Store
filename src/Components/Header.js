@@ -35,7 +35,7 @@ const Header = ({ noOfCartItems}) => {
           {/* Cart Icon with default badge */}
           <Link href="/Cart" className="relative">
             <FaShoppingCart size={22} className="hover:text-purple-200 transition" />
-            <span className="absolute -top-2 -right-2 bg-white text-purple-700 text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full shadow-sm">
+            <span className={noOfCartItems>=1 ? `absolute -top-2 -right-2 bg-white text-purple-700 text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full shadow-sm` : `hidden` }>
               {noOfCartItems}
             </span>
           </Link>
