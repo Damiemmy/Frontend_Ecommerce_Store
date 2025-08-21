@@ -14,7 +14,7 @@ Api.interceptors.request.use(
             const expiry_date=decode.exp
             const current_time=Date.now()/1000
             if(expiry_date>current_time){
-                config.headers.Authorization='Bearer ${token}'
+                config.headers.Authorization=`Bearer ${token}`
             }
         }
         return config;

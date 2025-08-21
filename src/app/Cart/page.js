@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { BaseUrl } from '@/Api/Api';
 import InCart from '@/Components/Cartcomponents/InCart';
-import Spinner from '@/Components/spinner';
+import Spinner from '@/Components/Spinner';
 
 const Cart = () => {
   const [incartProducts, setIncartproducts] = useState([]);

@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { FaPaypal, FaMoneyCheckAlt } from 'react-icons/fa';
 import { SiFlutter } from 'react-icons/si';
-
+import Protectedlayout from '@/Components/Protectedlayout';
 const Checkout = () => {
   // Dummy cart data
   const [cartitems] = useState([
@@ -15,6 +15,7 @@ const Checkout = () => {
   const total = +(subtotal + carttax).toFixed(2);
 
   return (
+    <Protectedlayout>
     <div className="flex justify-center my-20 items-center w-full mx-auto font-[Inter]">
       <div className="w-[90%] grid md:grid-cols-5 grid-cols-1 md:gap-6 gap-10 mx-auto">
         {/* Cart Summary */}
@@ -76,6 +77,7 @@ const Checkout = () => {
         </div>
       </div>
     </div>
+    </Protectedlayout>
   );
 };
 
