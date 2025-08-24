@@ -1,30 +1,79 @@
-import React from 'react'
+"use client";
+import React from "react";
+import { FaUser, FaLock, FaUserPlus } from "react-icons/fa";
 
-const page = () => {
+const Page = () => {
   return (
-    <div className='w-full flex flex-co justify-center items-center px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64'>
-      <div className='flex w-[80%] flex-col text-center h-screen justify-center items-center'>
-        <h2 className='text-3xl w-full text-gray-400 font-bold mb-10'>Sign Up</h2>
-    
-        <form className='flex flex-col gap-4 w-full text-black'>
-            <div className='text-center w-[70%] mx-auto border border-gray-300 rounded-md'>
-                <input className='border-none  text-medium  w-[100%] mx-auto text-gray px-3 py-2 outline-none rounded-md' type='text' placeholder='Enter your Username'/>
-            </div>
-            <div className='text-center w-[70%] mx-auto border border-gray-300 rounded-md'>
-                <input className='border-none  text-medium  w-[100%] mx-auto text-gray px-3 py-2 outline-none rounded-md' type='text' placeholder='Enter your Password'/>
-            </div>
-            <div className='text-center w-[70%] mx-auto border border-gray-300 rounded-md'>
-                <input className='border-none  text-medium  w-[100%] mx-auto text-gray px-3 py-2 outline-none rounded-md' type='text' placeholder='Confirm Password'/>
-            </div>
-            
-            <div>
-                <button  className='border border-gray-300 text-large hover:cursor-pointer hover:bg-purple-600 text-white bg-purple-400 px-3 py-2 w-[40%] mx-auto outline-none rounded-md'  type='submit'>Sign Up</button>
+    <div className="w-full min-h-screen flex justify-center items-center bg-gradient-to-br from-purple-700 via-purple-600 to-purple-500 px-4">
+      <div className="w-full max-w-md bg-white/95 backdrop-blur-md shadow-xl rounded-2xl p-8">
+        {/* Title */}
+        <h2 className="text-3xl font-extrabold text-purple-700 text-center mb-2">
+          Create Account
+        </h2>
+        <p className="text-gray-500 text-center mb-6">
+          Please fill in the details to sign up
+        </p>
 
-            </div>
+        {/* Form */}
+        <form className="space-y-5">
+          {/* Username */}
+          <div className="flex items-center border border-gray-300 rounded-lg overflow-hidden shadow-sm">
+            <span className="bg-purple-600 text-white px-3 py-2">
+              <FaUser />
+            </span>
+            <input
+              type="text"
+              className="flex-1 px-3 py-2 outline-none text-gray-700"
+              placeholder="Enter your Username"
+            />
+          </div>
+
+          {/* Password */}
+          <div className="flex items-center border border-gray-300 rounded-lg overflow-hidden shadow-sm">
+            <span className="bg-purple-600 text-white px-3 py-2">
+              <FaLock />
+            </span>
+            <input
+              type="password"
+              className="flex-1 px-3 py-2 outline-none text-gray-700"
+              placeholder="Enter your Password"
+            />
+          </div>
+
+          {/* Confirm Password */}
+          <div className="flex items-center border border-gray-300 rounded-lg overflow-hidden shadow-sm">
+            <span className="bg-purple-600 text-white px-3 py-2">
+              <FaLock />
+            </span>
+            <input
+              type="password"
+              className="flex-1 px-3 py-2 outline-none text-gray-700"
+              placeholder="Confirm Password"
+            />
+          </div>
+
+          {/* Button */}
+          <button
+            type="submit"
+            className="w-full flex items-center justify-center gap-2 bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 rounded-lg shadow-md transition"
+          >
+            <FaUserPlus /> Sign Up
+          </button>
         </form>
-    </div>
-    </div>
-  )
-}
 
-export default page
+        {/* Footer */}
+        <p className="mt-6 text-sm text-gray-500 text-center">
+          Already have an account?{" "}
+          <a
+            href="/Login"
+            className="text-purple-600 font-semibold hover:underline"
+          >
+            Login
+          </a>
+        </p>
+      </div>
+    </div>
+  );
+};
+
+export default Page;
