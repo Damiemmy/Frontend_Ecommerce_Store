@@ -1,18 +1,37 @@
 'use client';
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
+import Api from "@/Api/Api";
+import { AuthContext } from "@/Components/context/AuthContext";
+import { useContext } from "react";
+import Spinner from "@/Components/Spinner";
+import { CartContext } from "@/Components/context/CartContext";
+
+
 
 const Profile = () => {
-  const userinfo = {
-    username: "JohnDoe",
-    email: "johndoe@example.com",
-    first_name: "John",
-    last_name: "Doe",
-    city: "Lagos",
-    state: "Nigeria",
-    phone: "+2348012345678",
-    date_joined: "2024-01-15",
-  };
+  const[userinfo,setUserinfo]=useState({})
+  const{usernames,setUsernames}=useContext(AuthContext)
+  const[loading,setLoading]=useState(false)
 
+
+  useEffect(()=>{
+  const GetUserBio=async()=>{
+    try{
+      setLoading(true)
+      const Response=await Api.get("UserBio")
+      console.log(Response.data)
+      setUserinfo(Response.data)
+      console.log(userinfo)
+      setLoading(false);
+    }catch(err){
+      console.log(err.message)
+      setLoading(false)
+    }
+    
+  }
+  GetUserBio();
+  },[])
+ 
   const orderitem = [
     { product: { name: "Wireless Earbuds", price: "$49.99" }, order_date: "2024-06-05", order_id: "123456", quantity: 1 },
     { product: { name: "Fitness Tracker", price: "$89.99" }, order_date: "2024-06-06", order_id: "789012", quantity: 2 },
@@ -26,6 +45,12 @@ const Profile = () => {
   const itemsPerPageMobile = 4;
   const totalPages = Math.ceil(orderitem.length / itemsPerPageMobile);
   const paginatedOrders = orderitem.slice((currentPage - 1) * itemsPerPageMobile, currentPage * itemsPerPageMobile);
+  const currentYear = new Date().getFullYear();
+  console.log(currentYear); // e.g., 2025
+
+  if (loading) {
+     return (<Spinner loading={loading}/>)
+  }
 
   return (
     <div className="w-full px-4 md:px-12 py-10 bg-gray-50 min-h-screen text-gray-800 font-[Inter]">
@@ -59,7 +84,7 @@ const Profile = () => {
             </div>
             <div className="flex flex-col md:flex-row justify-between">
               <p><strong>Phone:</strong> {userinfo.phone}</p>
-              <p><strong>Member Since:</strong> {userinfo.date_joined}</p>
+              <p><strong>Member Since:</strong> {currentYear}</p>
             </div>
           </div>
         </div>

@@ -2,17 +2,18 @@
 import React from 'react';
 import Link from 'next/link';
 import Api from '@/Api/Api';
-import { useState } from 'react';
+import { useState,useContext } from 'react';
 import { useEffect } from 'react';
 import { BaseUrl } from '@/Api/Api';
 import InCart from '@/Components/Cartcomponents/InCart';
 import Spinner from '@/Components/Spinner';
+import { CartContext } from '@/Components/context/CartContext';
 
 const Cart = () => {
-  const [incartProducts, setIncartproducts] = useState([]);
-  const [loading,setLoading]=useState(false)
-  
-  const [getsubtotal,setGetsubtotal]=useState(0)
+  const {incartProducts,getsubtotal,setIncartproducts,setGetsubtotal}=useContext(CartContext)
+  const [loading,setLoading]=useState(false);
+
+
   useEffect(() => {
     const FetchProducts = async () => {
       const cart_code = localStorage.getItem('cart_code');
@@ -28,8 +29,8 @@ const Cart = () => {
         console.log(err.message);
         setLoading(false)
       }finally {
-      setTimeout(() => setLoading(false), 300); // delay to avoid flicker
-    }
+        setTimeout(() => setLoading(false), 300); // delay to avoid flicker
+        }
     };
     FetchProducts();
   }, []);

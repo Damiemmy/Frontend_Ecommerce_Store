@@ -1,18 +1,48 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState,useEffect,useContext } from 'react';
 import { FaPaypal, FaMoneyCheckAlt } from 'react-icons/fa';
 import { SiFlutter } from 'react-icons/si';
 import Protectedlayout from '@/Components/Protectedlayout';
+import Spinner from '@/Components/Spinner';
+import Api from '@/Api/Api';
+import { CartContext } from '@/Components/context/CartContext';
 const Checkout = () => {
-  // Dummy cart data
-  const [cartitems] = useState([
-    { id: 1, name: 'Product A', price: 45.99, quantity: 2 },
-    { id: 2, name: 'Product B', price: 30.0, quantity: 1 },
-  ]);
+  const[loading,setLoading]=useState(false)
+  const[cartitems,setCartitems]=useState([])
+  const {incartProducts,getsubtotal,setIncartproducts,setGetsubtotal}=useContext(CartContext)
 
-  const subtotal = cartitems.reduce((acc, item) => acc + item.price * item.quantity, 0);
-  const carttax = +(subtotal * 0.05).toFixed(2); // 5% tax
-  const total = +(subtotal + carttax).toFixed(2);
+
+  useEffect(() => {
+    const FetchProducts = async () => {
+      const cart_code = localStorage.getItem('cart_code');
+      try {
+        setLoading(true)
+        const Response = await Api.get(`Fetch_in_cart/?cart_code=${cart_code}`);
+        console.log(Response.data);
+        setIncartproducts(Response.data.items);
+        setGetsubtotal(Response.data.sum_total);
+        console.log(Response.data.sum_total)
+        setLoading(false)
+      } catch (err) {
+        console.log(err.message);
+        setLoading(false)
+      }finally {
+        setTimeout(() => setLoading(false), 300); // delay to avoid flicker
+        }
+    };
+    FetchProducts();
+  }, []);
+  // Dummy cart data
+  
+
+  const subtotal = getsubtotal.toFixed(2)
+  const taxamount = 4.00
+  const tax=taxamount.toFixed(2)
+  const total = (getsubtotal + taxamount).toFixed(2)
+
+   if (loading) {
+     return (<Spinner loading={loading}/>)
+  }
 
   return (
     <Protectedlayout>
@@ -24,19 +54,19 @@ const Checkout = () => {
             🛒 Cart Summary
           </h1>
           <div className="w-full flex flex-col gap-4 pt-6 pb-3 px-4">
-            {cartitems.map((item) => (
+            {incartProducts.map((item) => (
               <div
                 key={item.id}
                 className="flex justify-between items-center border-b pb-3"
               >
                 <div>
-                  <h4 className="font-semibold text-gray-700">{item.name}</h4>
+                  <h4 className="font-semibold text-gray-700">{item.product.name}</h4>
                   <p className="text-sm text-gray-500">
                     Quantity: {item.quantity}
                   </p>
                 </div>
                 <p className="font-semibold text-purple-700">
-                  ${(item.price * item.quantity).toFixed(2)}
+                  ${(item.product.price * item.quantity).toFixed(2)}
                 </p>
               </div>
             ))}

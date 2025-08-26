@@ -3,7 +3,7 @@ import "./globals.css";
 import Fixedlayout from "@/Components/fixedlayout";
 import { ProductContextProvider } from "@/Components/context/ProductContext";
 import { AuthContextProvider } from "@/Components/context/AuthContext";
-
+import { CartContextProvider } from "@/Components/context/CartContext";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -27,9 +27,11 @@ export default function RootLayout({ children }) {
       >
         <AuthContextProvider>
         <ProductContextProvider>
+        <CartContextProvider>
           <Fixedlayout>
             {children}
           </Fixedlayout>
+        </CartContextProvider> 
         </ProductContextProvider>
         </AuthContextProvider>
        

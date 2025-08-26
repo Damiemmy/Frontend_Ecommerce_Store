@@ -78,7 +78,11 @@ const Header = ({ noOfCartItems }) => {
                   Checkout
                 </Link>
               </li>
-              <li className="font-semibold">Hi {usernames}</li>
+              <li className="font-semibold">
+                <Link href="/Profile">
+                  Hi {usernames}
+                </Link> 
+                </li>
               <li>
                 <button
                   onClick={LogOutFunction}
