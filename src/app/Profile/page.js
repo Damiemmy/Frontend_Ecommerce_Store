@@ -5,6 +5,7 @@ import { AuthContext } from "@/Components/context/AuthContext";
 import { useContext } from "react";
 import Spinner from "@/Components/Spinner";
 import { CartContext } from "@/Components/context/CartContext";
+import { FormatDate } from "@/Components/FormatDate";
 
 
 
@@ -12,6 +13,7 @@ const Profile = () => {
   const[userinfo,setUserinfo]=useState({})
   const{usernames,setUsernames}=useContext(AuthContext)
   const[loading,setLoading]=useState(false)
+  const[orderitem,setOrderitem]=useState([])
 
 
   useEffect(()=>{
@@ -21,7 +23,9 @@ const Profile = () => {
       const Response=await Api.get("UserBio")
       console.log(Response.data)
       setUserinfo(Response.data)
+      setOrderitem(Response.data.items)
       console.log(userinfo)
+      console.log(Response.data.items)
       setLoading(false);
     }catch(err){
       console.log(err.message)
@@ -31,15 +35,10 @@ const Profile = () => {
   }
   GetUserBio();
   },[])
+
  
-  const orderitem = [
-    { product: { name: "Wireless Earbuds", price: "$49.99" }, order_date: "2024-06-05", order_id: "123456", quantity: 1 },
-    { product: { name: "Fitness Tracker", price: "$89.99" }, order_date: "2024-06-06", order_id: "789012", quantity: 2 },
-    { product: { name: "Laptop Stand", price: "$29.99" }, order_date: "2024-06-07", order_id: "345678", quantity: 1 },
-    { product: { name: "Smart Light Bulb", price: "$19.99" }, order_date: "2024-06-08", order_id: "901234", quantity: 3 },
-    { product: { name: "USB-C Charger", price: "$25.00" }, order_date: "2024-06-09", order_id: "567890", quantity: 2 },
-    { product: { name: "Bluetooth Speaker", price: "$59.99" }, order_date: "2024-06-10", order_id: "112233", quantity: 1 },
-  ];
+ 
+ 
 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPageMobile = 4;
@@ -140,7 +139,7 @@ const Profile = () => {
             <div key={i} className="grid grid-cols-6 gap-4 items-center border-b py-4">
               <div className="col-span-2">{order.product.name}</div>
               <div className="col-span-2 text-sm">
-                <p><strong>Date:</strong> {order.order_date}</p>
+                <p><strong>Date:</strong> {FormatDate(order.order_date)}</p>
                 <p><strong>ID:</strong> {order.order_id}</p>
               </div>
               <div>{order.quantity}</div>

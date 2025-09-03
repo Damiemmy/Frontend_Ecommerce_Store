@@ -23,6 +23,8 @@ const Productpage = ({ product,AddtoCart,incart,setIncart }) => {
         <p className="text-2xl font-bold text-purple-600 mt-2">${product.price}</p>
         <button
           onClick={()=>AddtoCart(product.id)}
+
+          disabled={incart}
           className={!incart?'mt-4 bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-full transition duration-300 shadow-md':'mt-4 disabled: bg-purple-200 text-white px-6 py-2 rounded-full transition duration-300 shadow-md'}
         >
           {!incart?"Add to Cart":"Product Added to Cart"}

@@ -73,11 +73,6 @@ const Header = ({ noOfCartItems }) => {
                   Profile
                 </Link>
               </li>
-              <li>
-                <Link href="/Checkout" className={isActive("/Checkout")}>
-                  Checkout
-                </Link>
-              </li>
               <li className="font-semibold">
                 <Link href="/Profile">
                   Hi {usernames}

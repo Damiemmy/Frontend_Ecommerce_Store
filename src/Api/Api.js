@@ -1,10 +1,9 @@
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 
-export const BaseUrl="http://127.0.0.1:8000/"
- 
+export const BaseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://127.0.0.1:8000/"
 const Api=axios.create({
-        baseURL:'http://127.0.0.1:8000/'
+        baseURL:BaseUrl
     })
 Api.interceptors.request.use(
     (config)=>{

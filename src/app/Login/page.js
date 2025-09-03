@@ -1,12 +1,12 @@
 "use client";
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext, Suspense } from "react";
 import Api from "@/Api/Api";
 import Spinner from "@/Components/Spinner";
 import { useRouter, useSearchParams } from "next/navigation";
 import { AuthContext } from "@/Components/context/AuthContext";
 import { FaUser, FaLock, FaSignInAlt } from "react-icons/fa";
 
-const Page = () => {
+const LoginContent = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -14,8 +14,7 @@ const Page = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const redirectPath = searchParams.get("redirect") || "/";
-  const { isAuthenticated, setIsAuthenticated, usernames, setUsernames } =
-    useContext(AuthContext);
+  const { setIsAuthenticated, setUsernames } = useContext(AuthContext);
 
   const Login_info = { username, password };
 
@@ -115,6 +114,14 @@ const Page = () => {
         </p>
       </div>
     </div>
+  );
+};
+
+const Page = () => {
+  return (
+    <Suspense fallback={<Spinner />}>
+      <LoginContent />
+    </Suspense>
   );
 };
 
