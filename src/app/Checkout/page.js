@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { FaPaypal, FaMoneyCheckAlt } from "react-icons/fa";
 import { SiFlutter } from "react-icons/si";
-import ProtectedLayout from "@/Components/Protectedlayout";
+import ProtectedLayout from "@/Components/ProtectedLayout";
 import Spinner from "@/Components/Spinner";
 import Api from "@/Api/Api";
 import { CartContext } from "@/Components/context/CartContext";
