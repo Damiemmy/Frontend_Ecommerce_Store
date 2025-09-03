@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation'
 import Spinner from './Spinner'
 import { usePathname } from 'next/navigation'
 
-const Protectedlayout = ({ children }) => {
+const ProtectedLayout = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(null)
   const router = useRouter()
   const Path=usePathname()
@@ -75,4 +75,4 @@ const Protectedlayout = ({ children }) => {
   return <>{children}</>
 }
 
-export default Protectedlayout
+export default ProtectedLayout
