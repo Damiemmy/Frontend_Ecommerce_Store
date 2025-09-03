@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { FaPaypal, FaMoneyCheckAlt } from "react-icons/fa";
 import { SiFlutter } from "react-icons/si";
-import ProtectedLayout from "@/Components/ProtectedLayout";
+import ProtectedRoute from "@/Components/ProtectedRoute";
 import Spinner from "@/Components/Spinner";
 import Api from "@/Api/Api";
 import { CartContext } from "@/Components/context/CartContext";
@@ -84,7 +84,7 @@ const Checkout = () => {
   }
 
   return (
-    <ProtectedLayout>
+    <ProtectedRoute>
       <div className="flex justify-center my-20 items-center w-full mx-auto font-[Inter]">
         <div className="w-[90%] grid md:grid-cols-5 grid-cols-1 md:gap-6 gap-10 mx-auto">
           {/* Cart Summary */}
@@ -154,7 +154,7 @@ const Checkout = () => {
           </div>
         </div>
       </div>
-    </ProtectedLayout>
+    </ProtectedRoute>
   );
 };
 
