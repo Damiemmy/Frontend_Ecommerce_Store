@@ -6,6 +6,8 @@ import { useContext } from "react";
 import Spinner from "@/Components/Spinner";
 import { CartContext } from "@/Components/context/CartContext";
 import { FormatDate } from "@/Components/FormatDate";
+import Link from "next/link";
+import { BaseUrl } from "@/Api/Api";
 
 
 
@@ -14,6 +16,24 @@ const Profile = () => {
   const{usernames,setUsernames}=useContext(AuthContext)
   const[loading,setLoading]=useState(false)
   const[orderitem,setOrderitem]=useState([])
+  const[userimage,setUserimage]=useState(null)
+
+  useEffect(()=>{
+    const GetUserinfo=async()=>{
+      try{
+        const Response=await Api.get("getuserimg/")
+        console.log(Response.data)
+        setUserimage(Response.data.image)
+        console.log(Response.data.image)
+      }catch(err){
+        console.log(err.message)
+
+      }
+      
+    }
+    GetUserinfo()
+    
+  },[])
 
 
   useEffect(()=>{
@@ -57,15 +77,17 @@ const Profile = () => {
       <div className="bg-white rounded-xl shadow-lg p-6 md:p-10 mb-10 flex flex-col md:flex-row gap-8 items-start">
         <div className="w-full md:w-1/4 flex flex-col items-center">
           <img
-            src="/stoic.jpeg"
+            src={`${BaseUrl}${userimage}`}
             alt="Profile"
             className="w-[120px] h-[120px] md:w-[150px] md:h-[150px] rounded-full object-cover border-4 border-purple-300 shadow-sm"
           />
           <p className="mt-4 text-lg font-semibold uppercase">{userinfo.username}</p>
           <span className="text-gray-500 text-sm">{userinfo.email}</span>
-          <button className="mt-4 bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-md shadow">
-            Edit Profile
+          <Link href='/EditProfile'>
+            <button className="mt-4 bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-md shadow">
+              Edit Profile
           </button>
+          </Link>
         </div>
 
         <div className="w-full md:w-3/4">

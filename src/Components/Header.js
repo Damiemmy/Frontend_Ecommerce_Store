@@ -5,6 +5,8 @@ import { usePathname, useRouter } from "next/navigation";
 import { FaShoppingCart, FaBars, FaTimes } from "react-icons/fa";
 import { AuthContext } from "./context/AuthContext";
 import Spinner from "./Spinner";
+import {AiOutlineUser} from 'react-icons/ai'
+import { FaUser } from "react-icons/fa";
 
 
 const Header = ({ noOfCartItems }) => {
@@ -55,12 +57,12 @@ const Header = ({ noOfCartItems }) => {
             </Link>
           </li>
           <li>
-            <Link href="/Contact" className={isActive("/Contact")}>
+            <Link href="/" className={isActive("/Contact")}>
               Contact
             </Link>
           </li>
           <li>
-            <Link href="/About" className={isActive("/About")}>
+            <Link href="/" className={isActive("/About")}>
               About
             </Link>
           </li>
@@ -73,11 +75,7 @@ const Header = ({ noOfCartItems }) => {
                   Profile
                 </Link>
               </li>
-              <li className="font-semibold">
-                <Link href="/Profile">
-                  Hi {usernames}
-                </Link> 
-                </li>
+              
               <li>
                 <button
                   onClick={LogOutFunction}
@@ -105,6 +103,14 @@ const Header = ({ noOfCartItems }) => {
 
         {/* Right Side */}
         <div className="flex items-center gap-4">
+          {isAuthenticated && <Link href='/Profile'>
+            <div className="flex justify-center items-center md:gap-2 gap-2">
+              <b><p className="hidden md:flex">Hi {usernames}</p></b>
+              <FaUser className="text-white" size={22}/>
+            </div>
+            
+          
+          </Link>}
           {/* Cart Icon */}
           <Link href="/Cart" className="relative">
             <FaShoppingCart
@@ -117,6 +123,7 @@ const Header = ({ noOfCartItems }) => {
               </span>
             )}
           </Link>
+          
 
           {/* Mobile Menu Button */}
           <button
@@ -152,7 +159,7 @@ const Header = ({ noOfCartItems }) => {
             </li>
             <li>
               <Link
-                href="/Contact"
+                href="/"
                 onClick={() => setMenuOpen(false)}
                 className={isActive("/Contact")}
               >
@@ -161,7 +168,7 @@ const Header = ({ noOfCartItems }) => {
             </li>
             <li>
               <Link
-                href="/About"
+                href="/"
                 onClick={() => setMenuOpen(false)}
                 className={isActive("/About")}
               >
@@ -180,15 +187,7 @@ const Header = ({ noOfCartItems }) => {
                     Profile
                   </Link>
                 </li>
-                <li>
-                  <Link
-                    href="/Checkout"
-                    onClick={() => setMenuOpen(false)}
-                    className={isActive("/Checkout")}
-                  >
-                    Checkout
-                  </Link>
-                </li>
+                
                 <li className="font-semibold">Hi {usernames}</li>
                 <li>
                   <button
