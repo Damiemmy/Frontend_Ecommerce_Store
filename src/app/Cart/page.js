@@ -39,7 +39,7 @@ const Cart = () => {
   return (<Spinner loading={loading}/>)
 }
   if(incartProducts.length === 0){
-    return <div className="text-center text-gray-600 text-xl flex justify-center items-center h-screen">You haven't added any item to your Cart   🛒.</div>
+    return <div className="text-center text-gray-600 text-xl flex justify-center items-center h-screen"><h1 className='py-10'>You haven't added any item to your Cart   🛒.</h1></div>
   }
 
 
