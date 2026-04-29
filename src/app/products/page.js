@@ -62,12 +62,13 @@
 // export default ShopPage;
 
 "use client";
-
+import { Suspense } from "react";
 import React, { useEffect, useState, useContext } from "react";
 import { ProductContext } from "@/Components/context/ProductContext";
 import Link from "next/link";
 import Api, { BaseUrl } from "@/Api/Api";
 import { useSearchParams } from "next/navigation";
+
 
 
 export default function ShopPage() {
@@ -136,6 +137,7 @@ export default function ShopPage() {
   const totalPages = Math.ceil(products.length / productsPerPage);
 
   return (
+    <Suspense fallback={<div>Loading...</div>}>
     <main className="min-h-screen bg-gradient-to-b from-purple-50 to-white pt-28">
       <div className="max-w-7xl mx-auto px-6 lg:grid lg:grid-cols-[220px_1fr] gap-8">
 
@@ -233,5 +235,6 @@ export default function ShopPage() {
         )}
       </div>
     </main>
+    </Suspense>
   );
 }
