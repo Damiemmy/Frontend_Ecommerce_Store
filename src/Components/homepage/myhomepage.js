@@ -162,7 +162,7 @@ export default function HomeLanding() {
                 </button>
 
                 <button
-                  onClick={() => router.push("/signup")}
+                  onClick={() => router.push("/Signup")}
                   className="border border-white/60 px-8 py-3 rounded-full font-semibold
                              hover:bg-white/10 transition"
                 >
