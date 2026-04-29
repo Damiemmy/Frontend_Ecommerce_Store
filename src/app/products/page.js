@@ -67,13 +67,20 @@ import React, { useEffect, useState, useContext } from "react";
 import { ProductContext } from "@/Components/context/ProductContext";
 import Link from "next/link";
 import Api, { BaseUrl } from "@/Api/Api";
+import { useSearchParams } from "next/navigation";
+
 
 export default function ShopPage() {
+  const searchParams = useSearchParams();
+  const categoryFromUrl = searchParams.get("category");
+  
   const { AddtoCart, incart } = useContext(ProductContext);
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [selectedCategory, setSelectedCategory] = useState("all");
+  const [selectedCategory, setSelectedCategory] = useState(categoryFromUrl ||'all');
   const [page, setPage] = useState(1);
+
+  
 
   const productsPerPageMobile = 10; // 2 columns x 5 rows
   const productsPerPageDesktop = 20; // 4 columns x 5 rows
@@ -87,15 +94,20 @@ export default function ShopPage() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  useEffect(() => {
+    if (categoryFromUrl) {
+      setSelectedCategory(categoryFromUrl);
+    }
+  }, [categoryFromUrl]);
+
   const productsPerPage = windowWidth >= 1024 ? productsPerPageDesktop : productsPerPageMobile;
 
   const categories = [
-    { name: "All Products", slug: "all", image: "https://images.unsplash.com/photo-1503341455253-b2e723bb3dbb?auto=format&fit=crop&w=300&q=80" },
-    { name: "For Men", slug: "men", image: "https://images.unsplash.com/photo-1521334884684-d80222895322?auto=format&fit=crop&w=300&q=80" },
-    { name: "For Women", slug: "women", image: "https://images.unsplash.com/photo-1520975916090-3105956dac38?auto=format&fit=crop&w=300&q=80" },
-    { name: "Clothings", slug: "clothing", image: "https://images.unsplash.com/photo-1523381294911-8d3cead13475?auto=format&fit=crop&w=300&q=80" },
-    { name: "Skincare", slug: "skincare", image: "https://images.unsplash.com/photo-1580870069867-74c57ee1bb07?auto=format&fit=crop&w=300&q=80" },
-    { name: "Electronics", slug: "electronics", image: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&w=300&q=80" },
+    { name: "All Products", slug: "all", image: "https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?auto=format&fit=crop&w=600&q=80" },
+    { name: "For Men", slug: "1", image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=600&q=80" },
+    { name: "For Women", slug: "2", image: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=600&q=80" },
+    { name: "Skincare", slug: "4", image: "https://images.unsplash.com/photo-1580870069867-74c57ee1bb07?auto=format&fit=crop&w=300&q=80" },
+    { name: "Electronics", slug: "3", image: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&w=300&q=80" },
   ];
 
   // Fetch products
@@ -104,6 +116,7 @@ export default function ShopPage() {
       try {
         setLoading(true);
         const endpoint = selectedCategory === "all" ? "products/" : `products/?category=${selectedCategory}`;
+        console.log("Current Category",selectedCategory)
         const response = await Api.get(endpoint);
         setProducts(response.data);
         setPage(1); // reset page on category change
@@ -128,26 +141,43 @@ export default function ShopPage() {
 
         {/* Sidebar */}
         <aside className="hidden lg:flex flex-col gap-6 sticky top-32">
-          <h3 className="text-lg font-bold text-purple-700 mb-4">Categories</h3>
-          {categories.map(cat => (
-            <div
-              key={cat.slug}
-              className={`relative group cursor-pointer overflow-hidden rounded-xl border-2 transition-all duration-300 ${
-                selectedCategory === cat.slug ? "border-purple-600 scale-105 shadow-lg" : "border-transparent"
-              }`}
-              onClick={() => setSelectedCategory(cat.slug)}
-            >
-              <img
-                src={cat.image}
-                alt={cat.name}
-                className="w-full h-20 object-cover rounded-xl transition-transform duration-500 group-hover:scale-110"
-              />
-              <span className="absolute inset-0 bg-black/30 flex items-center justify-center text-white font-medium opacity-0 group-hover:opacity-100 transition-opacity">
-                {cat.name}
-              </span>
-            </div>
-          ))}
-        </aside>
+  <h3 className="text-lg font-bold text-purple-700 mb-4">
+    Categories
+  </h3>
+
+  {categories.map((cat) => (
+    <div
+      key={cat.slug}
+      onClick={() => setSelectedCategory(cat.slug)}
+      className={`relative group cursor-pointer overflow-hidden rounded-xl border transition-all duration-300 hover:shadow-xl hover:-translate-y-1 ${
+        selectedCategory === cat.slug
+          ? "border-purple-600 shadow-lg scale-105"
+          : "border-gray-200"
+      }`}
+    >
+      {/* IMAGE */}
+      <img
+        src={cat.image}
+        alt={cat.name}
+        className="w-full h-20 object-cover transition-transform duration-500 group-hover:scale-110"
+      />
+
+      {/* ALWAYS VISIBLE TEXT (NEW DESIGN) */}
+      <div className="absolute inset-0 flex items-center justify-center">
+        <div className="px-3 py-1 rounded-full bg-black/60 backdrop-blur-sm">
+          <span className="text-white text-sm font-semibold tracking-wide group-hover:text-purple-200 transition">
+            {cat.name}
+          </span>
+        </div>
+      </div>
+
+      {/* TOP LEFT ACTIVE DOT */}
+      {selectedCategory === cat.slug && (
+        <div className="absolute top-2 right-2 w-2 h-2 bg-purple-500 rounded-full animate-pulse" />
+      )}
+    </div>
+  ))}
+</aside>
 
         {/* Products Grid */}
         <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
@@ -162,7 +192,7 @@ export default function ShopPage() {
                 >
                   <Link href={`/Shop/${product.slug}`} className="flex flex-col items-center h-full justify-between">
                     <img
-                      src={`${BaseUrl}${product.image}`}
+                      src={product.image}
                       alt={product.name}
                       className="w-full h-40 object-cover rounded-lg mb-2 transition-transform duration-500 hover:scale-105"
                     />
@@ -170,16 +200,13 @@ export default function ShopPage() {
                       <h3 className="text-sm font-medium text-gray-700 line-clamp-1">{product.name}</h3>
                       <p className="text-purple-600 font-semibold mt-1 text-sm">${product.price}</p>
                     </div>
-                  </Link>
+                  
                   <button
-                    className={`mt-2 px-4 py-1 rounded-full text-white ${
-                      incart ? "bg-purple-200" : "bg-purple-600 hover:bg-purple-700"
-                    } transition`}
-                    disabled={incart}
-                    onClick={() => AddtoCart(product.id)}
+                    className={`mt-2 px-4 py-1 rounded-full text-white bg-purple-600 hover:bg-purple-700 transition`}
                   >
-                    {!incart ? "Add to Cart" : "Added"}
+                    View
                   </button>
+                  </Link>
                 </div>
               ))}
         </div>

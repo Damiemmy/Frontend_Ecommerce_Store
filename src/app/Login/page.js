@@ -200,7 +200,7 @@ const LoginContent = () => {
             transition={{ delay: 0.2 }}
             className="text-3xl md:text-4xl font-extrabold text-purple-700 text-center"
           >
-            Welcome Back 👋
+            Welcome Back 🛒
           </motion.h2>
           <p className="text-center text-gray-500 mt-2 mb-8">
             Login to continue shopping smart
@@ -225,7 +225,7 @@ const LoginContent = () => {
               <input
                 type="text"
                 placeholder="Username"
-                className="w-full pl-12 pr-4 py-3 rounded-xl border border-gray-300 focus:border-purple-600 focus:ring-2 focus:ring-purple-500 outline-none transition"
+                className="w-full pl-12 pr-4 py-3  text-black rounded-xl border border-gray-300 focus:border-purple-600 focus:ring-2 focus:ring-purple-500 outline-none transition"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 required
@@ -238,7 +238,7 @@ const LoginContent = () => {
               <input
                 type="password"
                 placeholder="Password"
-                className="w-full pl-12 pr-4 py-3 rounded-xl border border-gray-300 focus:border-purple-600 focus:ring-2 focus:ring-purple-500 outline-none transition"
+                className="w-full pl-12 text-black pr-4 py-3 rounded-xl border border-gray-300 focus:border-purple-600 focus:ring-2 focus:ring-purple-500 outline-none transition"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required

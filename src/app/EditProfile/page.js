@@ -4,12 +4,15 @@ import { FaCamera } from "react-icons/fa";
 import Api, { BaseUrl } from "@/Api/Api";
 import { ToastContainer, toast } from "react-toastify";
 import Spinner from "@/Components/Spinner";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const EditProfile = () => {
   const [previewImage, setPreviewImage] = useState(null);
   const [userimage, setUserimage] = useState(null);
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
+  const router=useRouter()
 
   // Profile fields
   const [firstName, setFirstName] = useState("");
@@ -78,6 +81,7 @@ const EditProfile = () => {
       toast.success("Profile updated successfully!");
       setLoading(false);
       setErrorMsg("");
+      router.push('/Profile')
     } catch (err) {
       console.log("Update failed:", err.response?.data || err.message);
       setErrorMsg("❌ Update failed!");
@@ -149,12 +153,14 @@ const EditProfile = () => {
 
           {/* Buttons */}
           <div className="col-span-1 sm:col-span-2 flex flex-col sm:flex-row justify-center gap-3 sm:gap-4 mt-6">
+            <Link href={'/Profile'}>
             <button
               type="button"
               className="w-full sm:w-auto px-5 py-3 bg-gray-200 text-gray-700 rounded-xl font-medium shadow hover:bg-gray-300 transition"
             >
               Cancel
             </button>
+            </Link>
             <button
               type="submit"
               className="w-full sm:w-auto px-5 py-3 bg-purple-600 text-white rounded-xl font-semibold shadow hover:bg-purple-700 transition"

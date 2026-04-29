@@ -120,7 +120,7 @@ const Products = () => {
               {related.map((item) => (
                 <SwiperSlide key={item.id}>
                   <div className="bg-white rounded-2xl p-4 shadow-sm hover:shadow-xl transition group">
-                    <Link href={`/Product/${item.slug}`}>
+                    <Link href={`/Shop/${item.slug}`}>
                       <div className="overflow-hidden rounded-xl">
                         <img
                           src={`${BaseUrl}${item.image}`}

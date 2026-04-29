@@ -350,7 +350,7 @@ const Page = () => {
             </motion.p>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-6 text-black">
             {/* Account Info */}
             <div className="grid md:grid-cols-2 gap-4">
               <Input icon={<FaUser />} value={username} onChange={setUsername} placeholder="Username" />
@@ -412,7 +412,7 @@ const Input = ({ icon, value, onChange, placeholder, type = "text" }) => (
       value={value}
       onChange={(e) => onChange(e.target.value)}
       placeholder={placeholder}
-      className={`w-full ${icon ? "pl-12" : "pl-4"} pr-4 py-3 rounded-xl border border-gray-300 focus:border-purple-600 focus:ring-2 focus:ring-purple-500 outline-none transition`}
+      className={`w-full ${icon ? "pl-12" : "pl-4"} pr-4 py-3 rounded-xl text-black border border-gray-300 focus:border-purple-600 focus:ring-2 focus:ring-purple-500 outline-none transition`}
       required={["Username", "Email", "Password", "Confirm Password"].includes(placeholder)}
     />
   </motion.div>

@@ -129,10 +129,10 @@ const Checkout = () => {
               </h1>
 
               <div
-                onClick={() => PaypalPayment()}
+                
                 className="flex flex-col py-6 items-center gap-5 w-full"
               >
-                <button className="flex items-center gap-3 justify-center py-3 px-4 rounded-md w-[90%] bg-blue-600 hover:bg-blue-700 text-white text-md font-semibold transition">
+                <button onClick={() => PaypalPayment()} className="flex items-center gap-3 justify-center py-3 px-4 rounded-md w-[90%] bg-blue-600 hover:bg-blue-700 text-white text-md font-semibold transition">
                   <FaPaypal size={22} />
                   Pay with PayPal
                 </button>

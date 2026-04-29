@@ -7,6 +7,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
+
 /* ================= DATA ================= */
 
 const heroImages = [
@@ -18,11 +19,10 @@ const heroImages = [
 ];
 
 const categories = [
-  { name: "For Men", slug: "men", image: "https://images.unsplash.com/photo-1521334884684-d80222895322?auto=format&fit=crop&w=1200&q=80" },
-  { name: "For Women", slug: "women", image: "https://images.unsplash.com/photo-1520975916090-3105956dac38?auto=format&fit=crop&w=1200&q=80" },
-  { name: "Clothings", slug: "clothing", image: "https://images.unsplash.com/photo-1523381294911-8d3cead13475?auto=format&fit=crop&w=1200&q=80" },
-  { name: "Skincare", slug: "skincare", image: "https://images.unsplash.com/photo-1580870069867-74c57ee1bb07?auto=format&fit=crop&w=1200&q=80" },
-  { name: "Electronics", slug: "electronics", image: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=1200&q=80" },
+  { name: "For Men", slug: "1", image: "https://images.unsplash.com/photo-1521334884684-d80222895322?auto=format&fit=crop&w=1200&q=80" },
+  { name: "For Women", slug: "2", image: "https://images.unsplash.com/photo-1520975916090-3105956dac38?auto=format&fit=crop&w=1200&q=80" },
+  { name: "Skincare", slug: "4", image: "https://images.unsplash.com/photo-1580870069867-74c57ee1bb07?auto=format&fit=crop&w=1200&q=80" },
+  { name: "Electronics", slug: "3", image: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=1200&q=80" },
 ];
 
 const infiniteCategories = [...categories, ...categories];
@@ -73,7 +73,8 @@ export default function HomeLanding() {
   }, [catIndex]);
 
   const next = () => setCatIndex((p) => p + 1);
-  const prev = () => setCatIndex((p) => (p === 0 ? categories.length - 1 : p - 1));
+  const prev = () =>
+    setCatIndex((p) => (p === 0 ? categories.length - 1 : p - 1));
 
   return (
     <main className="pt-28 bg-gray-50 min-h-screen">
@@ -81,7 +82,9 @@ export default function HomeLanding() {
 
         {/* SIDEBAR */}
         <aside className="hidden lg:block bg-white rounded-2xl shadow-md p-6 sticky top-32 h-fit">
-          <h3 className="text-lg font-bold text-purple-700 mb-6">Shop Categories</h3>
+          <h3 className="text-lg font-bold text-purple-700 mb-6">
+            Shop Categories
+          </h3>
           <ul className="space-y-4">
             {categories.map((cat) => (
               <li key={cat.slug}>
@@ -101,7 +104,7 @@ export default function HomeLanding() {
         <section className="flex flex-col gap-16">
 
           {/* HERO */}
-          <div className="relative overflow-hidden rounded-3xl min-h-[420px] text-white shadow-xl">
+          <div className="relative overflow-hidden rounded-3xl min-h-[460px] text-white shadow-xl">
             <AnimatePresence>
               <motion.div
                 key={heroIndex}
@@ -118,7 +121,7 @@ export default function HomeLanding() {
                   unoptimized
                   className="object-cover"
                 />
-                <div className="absolute inset-0 bg-black/50" />
+                <div className="absolute inset-0 bg-black/55" />
               </motion.div>
             </AnimatePresence>
 
@@ -129,7 +132,7 @@ export default function HomeLanding() {
                 hidden: {},
                 show: { transition: { staggerChildren: 0.2 } },
               }}
-              className="relative z-10 px-8 py-24 text-center flex flex-col items-center gap-6"
+              className="relative z-10 px-8 py-28 text-center flex flex-col items-center gap-6"
             >
               <motion.h1
                 variants={{ hidden: { opacity: 0, y: 30 }, show: { opacity: 1, y: 0 } }}
@@ -144,6 +147,28 @@ export default function HomeLanding() {
               >
                 Premium fashion, skincare essentials, and modern electronics.
               </motion.p>
+
+              {/* CTA BUTTONS */}
+              <motion.div
+                variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0 } }}
+                className="flex flex-col sm:flex-row gap-4 mt-6"
+              >
+                <button
+                  onClick={() => router.push("/products")}
+                  className="bg-white text-purple-700 px-8 py-3 rounded-full font-semibold
+                             hover:scale-105 transition shadow-lg"
+                >
+                  Shop Now
+                </button>
+
+                <button
+                  onClick={() => router.push("/signup")}
+                  className="border border-white/60 px-8 py-3 rounded-full font-semibold
+                             hover:bg-white/10 transition"
+                >
+                  Join Us
+                </button>
+              </motion.div>
             </motion.div>
           </div>
 
@@ -155,7 +180,7 @@ export default function HomeLanding() {
               onClick={prev}
               className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white shadow p-2 rounded-full"
             >
-              <ChevronLeft />
+              <ChevronLeft className="text-purple-700"  />
             </motion.button>
 
             <motion.button
@@ -164,13 +189,15 @@ export default function HomeLanding() {
               onClick={next}
               className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white shadow p-2 rounded-full"
             >
-              <ChevronRight />
+              <ChevronRight className="text-purple-700" />
             </motion.button>
 
             <div className="overflow-hidden px-10">
               <div
                 ref={sliderRef}
-                style={{ transform: `translateX(-${(catIndex * 100) / visibleCount}%)` }}
+                style={{
+                  transform: `translateX(-${(catIndex * 100) / visibleCount}%)`,
+                }}
                 className="flex"
               >
                 {infiniteCategories.map((cat, i) => (
@@ -180,7 +207,9 @@ export default function HomeLanding() {
                     className="w-full md:w-1/2 lg:w-1/3 px-3 flex-shrink-0"
                   >
                     <div
-                      onClick={() => router.push(`/products?category=${cat.slug}`)}
+                      onClick={() =>
+                        router.push(`/products?category=${cat.slug}`)
+                      }
                       className="relative h-72 rounded-2xl overflow-hidden shadow-lg cursor-pointer group"
                     >
                       <Image
@@ -191,7 +220,9 @@ export default function HomeLanding() {
                         className="object-cover transition-transform duration-700 group-hover:scale-110"
                       />
                       <div className="absolute inset-0 bg-black/40 flex items-end p-6">
-                        <h3 className="text-white text-2xl font-bold">{cat.name}</h3>
+                        <h3 className="text-white text-2xl font-bold">
+                          {cat.name}
+                        </h3>
                       </div>
                     </div>
                   </motion.div>
